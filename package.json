@@ -4,7 +4,8 @@
   "description": "A validation service for Weird LTD",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/*.js -R spec -t 500"
+    "test": "node_modules/mocha/bin/mocha test/*.js -R spec -t 500 --recursive",
+    "watch": "node_modules/mocha/bin/mocha test/*.js -R spec -t 500 --recursive -w"
   },
   "repository": {
     "type": "git",
