@@ -1,0 +1,26 @@
+{
+  "name": "validator",
+  "version": "1.0.0",
+  "description": "A validation service for Weird LTD",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/*.js -R spec -t 500"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bartoloxs/kataTDD.git"
+  },
+  "keywords": [
+    "TDD"
+  ],
+  "author": "Carlos Barrón",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bartoloxs/kataTDD/issues"
+  },
+  "homepage": "https://github.com/bartoloxs/kataTDD#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.1.2"
+  }
+}
