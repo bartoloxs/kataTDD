@@ -3,19 +3,28 @@
 var assert = require('assert'),
     chai = require('chai'),
     expect = chai.expect,
-    validatorWidth = require('../lib/validator'),
-    nonPositiveValidationRule = require('../lib/rules/nonPositive'),
-    nonDivisibleValidationRule = require('../lib/rules/nonDivisible');
+    factoryWithConfiguration = require('../lib/factory');
 
-describe('A Validator', function() {
-  var validator;
+describe('A Validation', function() {
+  var validator, configuration;
   context('using the default validation rules:', function() {
-    before(function() {
-      validator = validatorWidth([
-        nonPositiveValidationRule,
-        nonDivisibleValidationRule(3, 'error.three'),
-        nonDivisibleValidationRule(5, 'error.five')
-      ]);
+    beforeEach(function() {
+      configuration = function() {
+        configuration.callCount++;
+        configuration.args = Array.prototype.slice.call(arguments);
+        return [
+          {type: 'nonPositive'},
+          {type: 'nonDivisible', options: {divisor: 3, error: 'error.three'}},
+          {type: 'nonDivisible', options: {divisor: 5, error: 'error.five'}}
+        ];
+      };
+      configuration.callCount = 0;
+      var newValidator = factoryWithConfiguration(configuration);
+      validator = newValidator('default');
+    });
+    it('will access the configuration to get the validation rules', function() {
+      expect(configuration.callCount).to.be.equal(1);
+      expect(configuration.args).to.be.deep.equal(['default']);
     });
     it('will return no error for valid numbers', function() {
       expect(validator(7)).to.be.empty;
