@@ -29,6 +29,25 @@ describe('A Validation', function() {
     it('will return no error for valid numbers', function() {
       expect(validator(7)).to.be.empty;
     });
+    context('using the alternative validation rules', function() {
+      beforeEach(function() {
+        configuration = function() {
+          configuration.callCount++;
+          configuration.args = Array.prototype.slice.call(arguments);
+          return [
+            {type: 'nonPositive'},
+            {type: 'nonDivisible', options: {divisor: 11, error: 'error.eleven'}}
+          ];
+        };
+        configuration.callCount = 0;
+        var newValidator = factoryWithConfiguration(configuration);
+        validator = newValidator('alternative');
+      });
+      it('will access the configuration to get the validation rules', function() {
+        expect(configuration.callCount).to.be.equal(1);
+        expect(configuration.args).to.be.deep.equal(['alternative']);
+      });
+    });
     context('will return error.nonpositive for not strictly positive numbers', function() {
       it('like 0', function(){
         expect(validator(0)).to.include('error.nonpositive');
