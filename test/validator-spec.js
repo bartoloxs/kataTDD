@@ -4,6 +4,7 @@ var sinon = require('sinon'),
     chai = require('chai'),
     expect = chai.expect,
     factoryWithConfiguration = require('../lib/factory');
+chai.use(require('sinon-chai'));
 
 describe('A Validation', function() {
   var validator, configuration;
@@ -19,8 +20,8 @@ describe('A Validation', function() {
       validator = newValidator('default');
     });
     it('will access the configuration to get the validation rules', function() {
-      expect(configuration.callCount).to.be.equal(1);
-      expect(configuration.calledWithExactly('default')).to.be.ok;
+      expect(configuration).to.have.been.calledOnce;
+      expect(configuration).to.have.been.calledWithExactly('default');
     });
     it('will return no error for valid numbers', function() {
       expect(validator(7)).to.be.empty;
@@ -36,8 +37,8 @@ describe('A Validation', function() {
         validator = newValidator('alternative');
       });
       it('will access the configuration to get the validation rules', function() {
-        expect(configuration.callCount).to.be.equal(1);
-        expect(configuration.calledWithExactly('alternative')).to.be.ok;
+        expect(configuration).to.have.been.calledOnce;
+        expect(configuration).to.have.been.calledWithExactly('alternative');
       });
     });
     context('will return error.nonpositive for not strictly positive numbers', function() {
